@@ -1,0 +1,7 @@
+/bin/
+
+#ignore a lot of local IDE settings - used stars in case repo's name changes.
+/.project
+/.classpath
+/.settings/*
+
