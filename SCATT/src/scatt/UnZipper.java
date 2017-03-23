@@ -15,14 +15,101 @@ import java.util.zip.ZipInputStream;
  */
 public class UnZipper
 {
-    final static int BUFFER = 2048;
+    private final static int BUFFER = 2048;
+    private String zippedFilePath;
+    private String unzipedFilePath;
+    private boolean success;
 
     /**
      * @param zippedDirectory the path to the .sb2
      */
     public UnZipper(String zippedDirectory)
     {
-        // TODO Auto-generated constructor stub
+        this.zippedFilePath = zippedDirectory;
+    }
+
+    /**
+     * 
+     * @return String representation of unzippped file path, or null if fail
+     */
+    public String unZip()
+    {
+        if (alreadyUnZipped())
+        {
+            return unzipedFilePath;
+        }
+
+        try
+        {
+            this.unzipedFilePath = zippedFilePath.substring(0,
+                    zippedFilePath.length() - 4);
+            File outputDir = new File(unzipedFilePath);
+            outputDir.mkdir();
+
+            // feed bos to file
+            BufferedOutputStream dest = null;
+
+            // for reading the zip file
+            FileInputStream fis = new FileInputStream(zippedFilePath);
+            ZipInputStream zis = new ZipInputStream(
+                    new BufferedInputStream(fis));
+            ZipEntry entry;
+            while ((entry = zis.getNextEntry()) != null)
+            {
+                // System.out.println("Extracting: " + entry);
+                int count;
+                byte data[] = new byte[BUFFER];
+                // write the files to the disk
+                FileOutputStream fos = new FileOutputStream(unzipedFilePath
+                        + "\\" + entry.getName());
+                dest = new BufferedOutputStream(fos, BUFFER);
+                while ((count = zis.read(data, 0, BUFFER)) != -1)
+                {
+                    dest.write(data, 0, count);
+                }
+                dest.flush();
+                dest.close();
+            }
+            zis.close();
+            success = true;
+            return unzipedFilePath;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Determines there already exists a file path for the unzipped version.
+     * 
+     * @return true if an unzipped file path exists, false otherwise.
+     */
+    private boolean alreadyUnZipped()
+    {
+        // todo implment this
+        return false;
+    }
+
+    /**
+     * Cleans created file path from unzip method.
+     */
+    public void clean()
+    {
+        // DO NOT TOUCH
+        System.out.println(unzipedFilePath);
+
+        if (success)
+        {
+            if (unzipedFilePath.equals(zippedFilePath.substring(0,
+                    zippedFilePath.length() - 4)))
+            {
+                System.out.println("to be implmented");
+                // FileUtils  
+            }
+        }
     }
 
     /**
@@ -36,7 +123,7 @@ public class UnZipper
             String path = "Pong Starter.sb2";
             path = buildPath + "\\src\\scatt\\" + path;
             String outputPath = "";
-            //String outputPath = "\\src\\scatt\\output\\";
+            // String outputPath = "\\src\\scatt\\output\\";
             File ouputDir = new File(buildPath + outputPath);
             ouputDir.mkdir();
 
@@ -70,25 +157,5 @@ public class UnZipper
         {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * 
-     * @return String representation of unzippped file path, or null if fail
-     */
-    public String unZip()
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    
-    /**
-     *  Cleans created file path from unzip method.  
-     */
-    public void clean()
-    {
-        // TODO Auto-generated method stub
-        
     }
 }

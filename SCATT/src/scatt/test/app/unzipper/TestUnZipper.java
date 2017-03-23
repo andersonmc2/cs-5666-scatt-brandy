@@ -17,7 +17,7 @@ import scatt.UnZipper;
 public class TestUnZipper
 {
 
-    private String zippedDirectory;
+    private static String zippedDirectory;
 
     /**
      * Set up for tests.
@@ -27,13 +27,10 @@ public class TestUnZipper
     {
         
         String curPath = Paths.get("").toAbsolutePath().toString();
-        //String buildPath = System.getProperty("java.class.path");
         String fileName = "Pong Starter.sb2";
-        System.out.println(curPath + "\\TestData\\" + fileName);
+        TestUnZipper.zippedDirectory = curPath + "\\TestData\\" + fileName;
+        //System.out.println(TestUnZipper.zippedDirectory);
 
-        // String outputPath = "\\src\\scatt\\output\\";
-        // File ouputDir = new File(buildPath + outputPath);
-        // ouputDir.mkdir();
     }
 
     /**
@@ -47,6 +44,9 @@ public class TestUnZipper
 
         // extract the zip
         String unZippedDir = unZipper.unZip();
+        
+        System.out.println(zippedDirectory);
+        System.out.println(unZippedDir);
 
         // test if the extraction path exists (zip = /test.sb2, unzip = /test
         String expectedDir = zippedDirectory.substring(0,
