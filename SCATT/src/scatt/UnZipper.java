@@ -18,6 +18,14 @@ public class UnZipper
     final static int BUFFER = 2048;
 
     /**
+     * @param zippedDirectory the path to the .sb2
+     */
+    public UnZipper(String zippedDirectory)
+    {
+        // TODO Auto-generated constructor stub
+    }
+
+    /**
      * @param argv cmd line args
      */
     public static void main(String argv[])
@@ -62,5 +70,25 @@ public class UnZipper
         {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 
+     * @return String representation of unzippped file path, or null if fail
+     */
+    public String unZip()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    
+    /**
+     *  Cleans created file path from unzip method.  
+     */
+    public void clean()
+    {
+        // TODO Auto-generated method stub
+        
     }
 }
