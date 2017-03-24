@@ -19,6 +19,7 @@ public class UnZipper
     private String zippedFilePath;
     private String unzipedFilePath;
     private boolean success;
+    private File outputDir;
 
     /**
      * @param zippedDirectory the path to the .sb2
@@ -43,7 +44,7 @@ public class UnZipper
         {
             this.unzipedFilePath = zippedFilePath.substring(0,
                     zippedFilePath.length() - 4);
-            File outputDir = new File(unzipedFilePath);
+            outputDir = new File(unzipedFilePath);
             outputDir.mkdir();
 
             // feed bos to file
@@ -99,63 +100,20 @@ public class UnZipper
     public void clean()
     {
         // DO NOT TOUCH
-        System.out.println(unzipedFilePath);
+        // System.out.println(unzipedFilePath);
 
+        // only clean if there was a successful unzipping
         if (success)
         {
+            // only clean if the file path to remove matches the zipped file.
             if (unzipedFilePath.equals(zippedFilePath.substring(0,
                     zippedFilePath.length() - 4)))
             {
                 System.out.println("to be implmented");
-                // FileUtils  
+
+                // FileUtils
             }
         }
     }
 
-    /**
-     * @param argv cmd line args
-     */
-    public static void main(String argv[])
-    {
-        try
-        {
-            String buildPath = System.getProperty("user.dir");
-            String path = "Pong Starter.sb2";
-            path = buildPath + "\\src\\scatt\\" + path;
-            String outputPath = "";
-            // String outputPath = "\\src\\scatt\\output\\";
-            File ouputDir = new File(buildPath + outputPath);
-            ouputDir.mkdir();
-
-            // feed bos to file
-            BufferedOutputStream dest = null;
-
-            // for reading the zip file
-            FileInputStream fis = new FileInputStream(path);
-            ZipInputStream zis = new ZipInputStream(
-                    new BufferedInputStream(fis));
-            ZipEntry entry;
-            while ((entry = zis.getNextEntry()) != null)
-            {
-                System.out.println("Extracting: " + entry);
-                int count;
-                byte data[] = new byte[BUFFER];
-                // write the files to the disk
-                FileOutputStream fos = new FileOutputStream(outputPath
-                        + entry.getName());
-                dest = new BufferedOutputStream(fos, BUFFER);
-                while ((count = zis.read(data, 0, BUFFER)) != -1)
-                {
-                    dest.write(data, 0, count);
-                }
-                dest.flush();
-                dest.close();
-            }
-            zis.close();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
 }
