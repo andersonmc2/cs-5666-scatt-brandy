@@ -53,6 +53,8 @@ public class TestUnZipper
                 zippedDirectory.length() - 4);
         assertTrue("the directories didn't match",
                 expectedDir.equals(unZippedDir));
+        
+        unZipper.clean();
     }
 
     /**

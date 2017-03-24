@@ -16,10 +16,10 @@ import java.util.zip.ZipInputStream;
 public class UnZipper
 {
     private final static int BUFFER = 2048;
+    private File outputDir;
     private String zippedFilePath;
     private String unzipedFilePath;
     private boolean success;
-    private File outputDir;
 
     /**
      * @param zippedDirectory the path to the .sb2
@@ -109,9 +109,16 @@ public class UnZipper
             if (unzipedFilePath.equals(zippedFilePath.substring(0,
                     zippedFilePath.length() - 4)))
             {
-                System.out.println("to be implmented");
-
-                // FileUtils
+                // System.out.println("to be implmented");
+                for (File c : outputDir.listFiles())
+                {
+                    //System.out.println(c.toString());
+                    if (!c.delete())
+                    {
+                        System.out.println("failed to delete" + c.toString());
+                    }
+                }
+                outputDir.delete();
             }
         }
     }
